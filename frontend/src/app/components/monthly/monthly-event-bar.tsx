@@ -29,30 +29,35 @@ export function MonthlyEventBar({ event, row, weekDays }: MonthlyEventBarProps) 
   const endsThisWeek = event.endDate <= weekEnd;
 
   return (
-    <React.Fragment>
-      <div
-        className="absolute flex items-center"
-        style={{
-          left: `calc(${leftPct}% + 2px)`,
-          width: `calc(${widthPct}% - 4px)`,
-          top: topOffset,
-          height: 4,
-          zIndex: 20,
-          backgroundColor: project.color,
-          borderRadius: 2,
-        }}
-      />
-      {endsThisWeek && (
+    <div
+      className="absolute z-20"
+      style={{
+        left: `calc(${leftPct}% + 2px)`,
+        width: `calc(${widthPct}% - 4px)`,
+        top: topOffset - 6,
+        height: 16,
+      }}
+    >
+      <div className="flex h-full items-center gap-[0.5em]">
         <div
-          className="absolute flex items-center gap-[0.5em] z-20"
+          className="min-w-0 flex-1"
           style={{
-            left: `calc(${((endIdx + 1) / 7) * 100}% + 4px)`,
-            top: topOffset - 6,
+            height: 4,
+            backgroundColor: project.color,
+            borderRadius: 2,
           }}
-        >
+        />
+        {endsThisWeek && (
+          <div
+            className="shrink-0 flex items-center"
+            style={{
+              whiteSpace: 'nowrap',
+            }}
+          >
           <MonthlyEventLabel project={project} />
-        </div>
-      )}
-    </React.Fragment>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
