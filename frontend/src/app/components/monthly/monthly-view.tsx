@@ -60,61 +60,7 @@ export function MonthlyView({ currentDate }: MonthlyViewProps) {
                 <MonthlyEventBar key={event.id} event={event} row={row} weekDays={week} />
               ))}
 
-              {/* Schedule labels (컴퓨팅적 사고) */}
-              {weekIdx === 0 && (
-                <div
-                  className="absolute flex items-center gap-1 z-20"
-                  style={{ left: `${(2 / 7) * 100}%`, top: '5em', paddingLeft: '0.6em' }}
-                >
-                  <span className="text-[0.833em] text-black bg-white/80 px-1 rounded" style={{ fontWeight: 700 }}>
-                    컴퓨팅적 사고
-                  </span>
-                </div>
-              )}
-              {weekIdx === 1 && (
-                <div
-                  className="absolute flex items-center gap-1 z-20"
-                  style={{ left: `${(1 / 7) * 100}%`, top: '2.9em', paddingLeft: '0.6em' }}
-                >
-                  <span className="text-[0.833em] text-black bg-white/80 px-1 rounded" style={{ fontWeight: 700 }}>
-                    컴퓨팅적 사고
-                  </span>
-                </div>
-              )}
 
-              {/* Stats icons */}
-              {weekIdx === 0 && (
-                <>
-                  <div
-                    className="absolute flex items-center gap-1.5 z-20"
-                    style={{ left: `${(1 / 7) * 100}%`, bottom: '0.6em', paddingLeft: '0.3em' }}
-                  >
-                    <DayStats eye={3} chat={2} />
-                  </div>
-                  <div
-                    className="absolute flex items-center gap-1.5 z-20"
-                    style={{ left: `${(4 / 7) * 100}%`, bottom: '0.6em', paddingLeft: '0.3em' }}
-                  >
-                    <DayStats chat={2} />
-                  </div>
-                </>
-              )}
-              {weekIdx === 1 && (
-                <div
-                  className="absolute flex items-center gap-1.5 z-20"
-                  style={{ left: `${(2 / 7) * 100}%`, bottom: '0.6em', paddingLeft: '0.3em' }}
-                >
-                  <DayStats move={2} eye={3} chat={2} cal={3} />
-                </div>
-              )}
-              {weekIdx === 2 && (
-                <div
-                  className="absolute flex items-center gap-1.5 z-20"
-                  style={{ left: `${(3 / 7) * 100}%`, bottom: '0.6em', paddingLeft: '0.3em' }}
-                >
-                  <DayStats eye={3} chat={2} cal={3} />
-                </div>
-              )}
             </div>
           );
         })}
