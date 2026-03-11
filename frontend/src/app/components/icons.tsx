@@ -180,10 +180,10 @@ export function ChevronRightIcon({ size = 20 }: { size?: number }) {
 export function DDayBadge({ dDay, color }: { dDay: number; color: string }) {
   return (
     <div
-      className="flex items-center justify-center rounded-[4px] px-[6px] py-[2px] shrink-0"
-      style={{ backgroundColor: color, minWidth: 30, height: 15 }}
+      className="flex items-center justify-center rounded-[0.3em] px-[0.4em] py-[0.15em] shrink-0"
+      style={{ backgroundColor: color }}
     >
-      <span className="text-white text-[0.667em]" style={{ fontWeight: 800 }}>
+      <span className="text-white text-[0.7em]" style={{ fontWeight: 800 }}>
         D-{dDay}
       </span>
     </div>

@@ -4,12 +4,13 @@ import type { Project } from '../calendar-data';
 
 interface EventLabelProps {
   project: Project;
+  fontSize?: string;
 }
 
-export function EventLabel({ project }: EventLabelProps) {
+export function EventLabel({ project, fontSize = '1em' }: EventLabelProps) {
   return (
     <span className="inline-flex items-center whitespace-nowrap gap-[0.5em]">
-      <span className="text-[1em] text-black" style={{ fontWeight: 800 }}>
+      <span className="text-black" style={{ fontWeight: 800, fontSize }}>
         {project.name}
       </span>
       <DDayBadge dDay={project.dDay} color={project.color} />

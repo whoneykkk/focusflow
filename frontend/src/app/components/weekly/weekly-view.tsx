@@ -108,7 +108,7 @@ export function WeeklyView({ currentDate }: WeeklyViewProps) {
                 className="h-full rounded-r-[5px] flex items-center justify-end pr-2 gap-[0.5em]"
                 style={{ backgroundColor: project.bgColor }}
               >
-                {endsThisWeek && <EventLabel project={project} />}
+                {endsThisWeek && <EventLabel project={project} fontSize="1em" />}
               </div>
             </div>
           );

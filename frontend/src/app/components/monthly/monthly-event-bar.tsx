@@ -54,7 +54,7 @@ export function MonthlyEventBar({ event, row, weekDays }: MonthlyEventBarProps) 
               whiteSpace: 'nowrap',
             }}
           >
-            <EventLabel project={project} />
+            <EventLabel project={project} fontSize="0.75em" />
           </div>
         )}
       </div>
