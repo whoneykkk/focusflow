@@ -32,8 +32,8 @@ export function MonthlyEventBar({ event, row, weekDays }: MonthlyEventBarProps) 
     <div
       className="absolute z-20"
       style={{
-        left: `calc(${leftPct}% + 2px)`,
-        width: `calc(${widthPct}% - 4px)`,
+        left: `calc(${leftPct}% + 0.35em)`,
+        width: `calc(${widthPct}% - 0.7em)`,
         top: topOffset - 6,
         height: 16,
       }}
