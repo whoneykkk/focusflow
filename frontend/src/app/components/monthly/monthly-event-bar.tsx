@@ -1,6 +1,6 @@
 import React from 'react';
 import { differenceInDays } from 'date-fns';
-import { EventLabel } from '../shared/event-label';
+import { MonthlyEventLabel } from './monthly-event-label';
 import { projects } from '../calendar-data';
 import type { CalendarEvent } from '../calendar-data';
 
@@ -44,13 +44,13 @@ export function MonthlyEventBar({ event, row, weekDays }: MonthlyEventBarProps) 
       />
       {endsThisWeek && (
         <div
-          className="absolute flex items-center gap-[3px] z-20"
+          className="absolute flex items-center gap-[0.5em] z-20"
           style={{
             left: `calc(${((endIdx + 1) / 7) * 100}% + 4px)`,
             top: topOffset - 6,
           }}
         >
-          <EventLabel project={project} textSize="sm" />
+          <MonthlyEventLabel project={project} />
         </div>
       )}
     </React.Fragment>

@@ -6,13 +6,13 @@ import {
   differenceInDays,
 } from 'date-fns';
 import { projects, calendarEvents, schedules, todos, stickyNotes, getEventsForWeek, type Todo } from '../calendar-data';
-import { EventLabel } from '../shared/event-label';
 import { CalendarDayHeader } from '../shared/calendar-day-header';
 import { VerticalGridLines } from '../shared/vertical-grid-lines';
 import { DayNumber } from '../shared/day-number';
 import { ScheduleCard } from './schedule-card';
 import { TodoItem } from './todo-item';
 import { StickyNote } from './sticky-note';
+import { WeeklyEventLabel } from './weekly-event-label';
 
 interface WeeklyViewProps {
   currentDate: Date;
@@ -23,12 +23,7 @@ const D = 2;        // 날짜 숫자 행 높이
 const EV_GAP = 0.7; // 이벤트 바 상단 여백
 const EV_STEP = 2.9; // 이벤트 바 행 높이
 const EV_H = '2.1em'; // 이벤트 바 높이
-const SC_TOP = 6.4; // 스케줄 카드 기본 top
-const SC_ALLDAY = 1.4; // 종일 스케줄 추가 offset
-const TD_TOP = 12;  // 투두 기본 top
-const TD_STEP = 1.8; // 투두 행 간격
-const NT_YELLOW = 16; // 노란 스티커 top
-const NT_OTHER = 24;  // 기타 스티커 top
+const STACK_TOP = 6.4; // 스택 시작 top
 
 export function WeeklyView({ currentDate }: WeeklyViewProps) {
   const today = new Date();
@@ -110,90 +105,57 @@ export function WeeklyView({ currentDate }: WeeklyViewProps) {
               }}
             >
               <div
-                className="h-full rounded-r-[5px] flex items-center justify-end pr-2 gap-[5px]"
+                className="h-full rounded-r-[5px] flex items-center justify-end pr-2 gap-[0.5em]"
                 style={{ backgroundColor: project.bgColor }}
               >
-                {endsThisWeek && <EventLabel project={project} textSize="md" />}
+                {endsThisWeek && <WeeklyEventLabel project={project} />}
               </div>
             </div>
           );
         })}
 
-        {/* Schedule Cards */}
-        {schedules.map((schedule) => {
-          const dayIdx = weekDays.findIndex((d) => isSameDay(d, schedule.date));
-          if (dayIdx < 0) return null;
+        {/* Schedules + Todos + Sticky Notes (Top-aligned stack) */}
+        {weekDays.map((day, dayIdx) => {
+          const daySchedules = schedules.filter((schedule) => isSameDay(schedule.date, day));
+          const dayTodos: Todo[] = todos.filter((todo) => isSameDay(todo.date, day));
+          const dayNotes = stickyNotes.filter((note) => isSameDay(note.date, day));
+          const items = [
+            ...daySchedules.map((schedule) => ({ type: 'schedule' as const, id: schedule.id, schedule })),
+            ...dayTodos.map((todo) => ({ type: 'todo' as const, id: todo.id, todo })),
+            ...dayNotes.map((note) => ({ type: 'note' as const, id: note.id, note })),
+          ];
+
+          if (items.length === 0) return null;
 
           const leftPct = (dayIdx / 7) * 100;
 
           return (
             <div
-              key={schedule.id}
+              key={`day-stack-${dayIdx}`}
               className="absolute z-20"
               style={{
                 left: `calc(${leftPct}% + 0.35em)`,
                 width: `calc(${(1 / 7) * 100}% - 0.7em)`,
-                top: `${D + SC_TOP + (schedule.isAllDay ? SC_ALLDAY : 0)}em`,
+                top: `${D + STACK_TOP}em`,
               }}
             >
-              <ScheduleCard schedule={schedule} />
-            </div>
-          );
-        })}
-
-        {/* Todos */}
-        {(() => {
-          const todosGrouped: Record<number, Todo[]> = {};
-          todos.forEach((todo) => {
-            const dayIdx = weekDays.findIndex((d) => isSameDay(d, todo.date));
-            if (dayIdx >= 0) {
-              if (!todosGrouped[dayIdx]) todosGrouped[dayIdx] = [];
-              todosGrouped[dayIdx].push(todo);
-            }
-          });
-
-          return Object.entries(todosGrouped).map(([dayIdxStr, dayTodos]) => {
-            const dayIdx = parseInt(dayIdxStr);
-            const leftPct = (dayIdx / 7) * 100;
-
-            return dayTodos.map((todo, i) => (
-              <div
-                key={todo.id}
-                className="absolute z-20"
-                style={{
-                  left: `calc(${leftPct}% + 0.35em)`,
-                  top: `${D + TD_TOP + i * TD_STEP}em`,
-                }}
-              >
-                <TodoItem
-                  todo={todo}
-                  isCompleted={todoState[todo.id]}
-                  onToggle={() => toggleTodo(todo.id)}
-                />
+              <div className="flex flex-col items-start gap-[0.5em]">
+                {items.map((item) => (
+                  <div key={item.id} className="w-full">
+                    {item.type === 'schedule' ? (
+                      <ScheduleCard schedule={item.schedule} />
+                    ) : item.type === 'todo' ? (
+                      <TodoItem
+                        todo={item.todo}
+                        isCompleted={todoState[item.todo.id]}
+                        onToggle={() => toggleTodo(item.todo.id)}
+                      />
+                    ) : (
+                      <StickyNote note={item.note} />
+                    )}
+                  </div>
+                ))}
               </div>
-            ));
-          });
-        })()}
-
-        {/* Sticky Notes */}
-        {stickyNotes.map((note) => {
-          const dayIdx = weekDays.findIndex((d) => isSameDay(d, note.date));
-          if (dayIdx < 0) return null;
-
-          const leftPct = (dayIdx / 7) * 100;
-          const isYellow = note.color === 'yellow';
-
-          return (
-            <div
-              key={note.id}
-              className="absolute z-20"
-              style={{
-                left: `calc(${leftPct}% + 0.35em)`,
-                width: `calc(${(1 / 7) * 100}% - 0.7em)`,
-                top: `${D + (isYellow ? NT_YELLOW : NT_OTHER)}em`,
-              }}
-            >
-              <StickyNote note={note} />
             </div>
           );
         })}
