@@ -12,7 +12,7 @@ export function VerticalGridLines() {
           className="absolute top-0 bottom-0 pointer-events-none"
           style={{
             left: `${(i / 7) * 100}%`,
-            width: '1px',
+            width: '0.0625rem',
             backgroundImage: DASH_LINE,
           }}
         />

@@ -10,7 +10,7 @@ interface TodoItemProps {
 
 export function TodoItem({ todo, isCompleted, onToggle }: TodoItemProps) {
   return (
-    <div className="flex items-center gap-[5px]">
+    <div className="flex items-center gap-[0.3125rem]">
       <button onClick={onToggle} className="shrink-0">
         {isCompleted ? (
           <CheckCircleFadedIcon size={15} />

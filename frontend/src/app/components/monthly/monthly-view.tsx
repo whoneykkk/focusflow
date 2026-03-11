@@ -41,14 +41,14 @@ export function MonthlyView({ currentDate }: MonthlyViewProps) {
         {weeks.map((week, weekIdx) => {
           const eventRows = getEventsForWeek(week, calendarEvents);
           const maxEventRow = eventRows.reduce((max, { row }) => Math.max(max, row), -1);
-          const scheduleAnchorTop = maxEventRow >= 0 ? 36 + maxEventRow * 20 : 26;
-          const scheduleTop = `calc(${scheduleAnchorTop}px + 0.5em)`;
+          const scheduleAnchorTopRem = maxEventRow >= 0 ? 2.25 + maxEventRow * 1.25 : 1.625;
+          const scheduleTop = `calc(${scheduleAnchorTopRem}rem + 0.5em)`;
 
           return (
             <div
               key={weekIdx}
               className="flex-1 grid grid-cols-7 relative"
-              style={{ minHeight: '10em', borderBottom: weekIdx < weeks.length - 1 ? '1px dashed rgba(0,0,0,0.3)' : 'none' }}
+              style={{ minHeight: '10em', borderBottom: weekIdx < weeks.length - 1 ? '0.0625rem dashed rgba(0,0,0,0.3)' : 'none' }}
             >
               <VerticalGridLines />
 

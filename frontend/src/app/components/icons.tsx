@@ -156,7 +156,7 @@ export function MonthViewIcon({ active = false }: { active?: boolean }) {
   );
 }
 
-export function ChevronLeftIcon({ size = 20 }: { size?: number }) {
+export function ChevronLeftIcon({ size = 20 }: { size?: number | string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 20 20" fill="none">
       <mask id="cli" maskUnits="userSpaceOnUse" style={{ maskType: 'alpha' }} width="20" height="20" x="0" y="0">
@@ -169,7 +169,7 @@ export function ChevronLeftIcon({ size = 20 }: { size?: number }) {
   );
 }
 
-export function ChevronRightIcon({ size = 20 }: { size?: number }) {
+export function ChevronRightIcon({ size = 20 }: { size?: number | string }) {
   return (
     <div style={{ transform: 'rotate(180deg)' }}>
       <ChevronLeftIcon size={size} />
