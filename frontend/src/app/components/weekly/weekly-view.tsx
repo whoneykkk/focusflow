@@ -9,10 +9,10 @@ import { projects, calendarEvents, schedules, todos, stickyNotes, getEventsForWe
 import { CalendarDayHeader } from '../shared/calendar-day-header';
 import { VerticalGridLines } from '../shared/vertical-grid-lines';
 import { DayNumber } from '../shared/day-number';
+import { EventLabel } from '../shared/event-label';
 import { ScheduleCard } from './schedule-card';
 import { TodoItem } from './todo-item';
 import { StickyNote } from './sticky-note';
-import { WeeklyEventLabel } from './weekly-event-label';
 
 interface WeeklyViewProps {
   currentDate: Date;
@@ -108,7 +108,7 @@ export function WeeklyView({ currentDate }: WeeklyViewProps) {
                 className="h-full rounded-r-[5px] flex items-center justify-end pr-2 gap-[0.5em]"
                 style={{ backgroundColor: project.bgColor }}
               >
-                {endsThisWeek && <WeeklyEventLabel project={project} />}
+                {endsThisWeek && <EventLabel project={project} fontSize="1em" />}
               </div>
             </div>
           );

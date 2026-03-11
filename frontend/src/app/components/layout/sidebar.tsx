@@ -12,7 +12,7 @@ import {
   subMonths,
 } from 'date-fns';
 import { projects } from '../calendar-data';
-import { ProjectIcon, DDayBadge } from '../icons';
+import { DDayBadge } from '../icons';
 
 interface SidebarProps {
   currentDate: Date;
@@ -106,14 +106,13 @@ export function Sidebar({ currentDate, onDateChange, selectedDate }: SidebarProp
 
       {/* Projects */}
       <div>
-        <p className="text-[1em] text-black mb-2" style={{ fontWeight: 700, letterSpacing: '0.6px' }}>
+        <p className="text-[1em] text-black mb-2" style={{ fontWeight: 700}}>
           프로젝트
         </p>
         <div className="flex flex-col gap-2">
           {projects.map((project) => (
-            <div key={project.id} className="flex items-center gap-[5px]">
-              <ProjectIcon type={project.icon} />
-              <span className="text-[1em] text-black" style={{ fontWeight: 400, letterSpacing: '0.6px' }}>
+            <div key={project.id} className="flex items-center gap-[0.5em]">
+              <span className="text-[1em] text-black" style={{ fontWeight: 400}}>
                 {project.name}
               </span>
               <DDayBadge dDay={project.dDay} color={project.color} />

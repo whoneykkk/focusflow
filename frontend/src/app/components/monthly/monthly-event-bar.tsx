@@ -1,6 +1,6 @@
 import React from 'react';
 import { differenceInDays } from 'date-fns';
-import { MonthlyEventLabel } from './monthly-event-label';
+import { EventLabel } from '../shared/event-label';
 import { projects } from '../calendar-data';
 import type { CalendarEvent } from '../calendar-data';
 
@@ -29,30 +29,35 @@ export function MonthlyEventBar({ event, row, weekDays }: MonthlyEventBarProps) 
   const endsThisWeek = event.endDate <= weekEnd;
 
   return (
-    <React.Fragment>
-      <div
-        className="absolute flex items-center"
-        style={{
-          left: `calc(${leftPct}% + 2px)`,
-          width: `calc(${widthPct}% - 4px)`,
-          top: topOffset,
-          height: 4,
-          zIndex: 20,
-          backgroundColor: project.color,
-          borderRadius: 2,
-        }}
-      />
-      {endsThisWeek && (
+    <div
+      className="absolute z-20"
+      style={{
+        left: `calc(${leftPct}% + 0.35em)`,
+        width: `calc(${widthPct}% - 0.7em)`,
+        top: topOffset - 6,
+        height: 16,
+      }}
+    >
+      <div className="flex h-full items-center gap-[0.5em]">
         <div
-          className="absolute flex items-center gap-[0.5em] z-20"
+          className="min-w-0 flex-1"
           style={{
-            left: `calc(${((endIdx + 1) / 7) * 100}% + 4px)`,
-            top: topOffset - 6,
+            height: 4,
+            backgroundColor: project.color,
+            borderRadius: 2,
           }}
-        >
-          <MonthlyEventLabel project={project} />
-        </div>
-      )}
-    </React.Fragment>
+        />
+        {endsThisWeek && (
+          <div
+            className="shrink-0 flex items-center"
+            style={{
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <EventLabel project={project} fontSize="0.75em" />
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
