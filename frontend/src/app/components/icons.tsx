@@ -177,17 +177,6 @@ export function ChevronRightIcon({ size = 20 }: { size?: number }) {
   );
 }
 
-export function ProjectIcon({ type, color }: { type: 'check' | 'clock' | 'circle'; color?: string }) {
-  switch (type) {
-    case 'check':
-      return <CheckCircleIcon color={color} />;
-    case 'clock':
-      return <ClockLoaderIcon color={color} />;
-    case 'circle':
-      return <CircleIcon color={color} />;
-  }
-}
-
 export function DDayBadge({ dDay, color }: { dDay: number; color: string }) {
   return (
     <div

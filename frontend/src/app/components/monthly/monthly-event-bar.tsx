@@ -1,6 +1,6 @@
 import React from 'react';
 import { differenceInDays } from 'date-fns';
-import { MonthlyEventLabel } from './monthly-event-label';
+import { EventLabel } from '../shared/event-label';
 import { projects } from '../calendar-data';
 import type { CalendarEvent } from '../calendar-data';
 
@@ -54,7 +54,7 @@ export function MonthlyEventBar({ event, row, weekDays }: MonthlyEventBarProps) 
               whiteSpace: 'nowrap',
             }}
           >
-          <MonthlyEventLabel project={project} />
+            <EventLabel project={project} variant="monthly" />
           </div>
         )}
       </div>
