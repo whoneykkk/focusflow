@@ -4,15 +4,12 @@ import type { Project } from '../calendar-data';
 
 interface EventLabelProps {
   project: Project;
-  variant?: 'weekly' | 'monthly';
 }
 
-export function EventLabel({ project, variant = 'monthly' }: EventLabelProps) {
-  const gapClass = variant === 'weekly' ? 'gap-[0.5em]' : 'gap-[0.35em]';
-
+export function EventLabel({ project }: EventLabelProps) {
   return (
-    <span className={`inline-flex items-center whitespace-nowrap ${gapClass}`}>
-      <span className="text-[1em] text-black" style={{ fontWeight: 400 }}>
+    <span className="inline-flex items-center whitespace-nowrap gap-[0.5em]">
+      <span className="text-[1em] text-black" style={{ fontWeight: 800 }}>
         {project.name}
       </span>
       <DDayBadge dDay={project.dDay} color={project.color} />
