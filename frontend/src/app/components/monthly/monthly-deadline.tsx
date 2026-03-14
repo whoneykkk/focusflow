@@ -1,16 +1,16 @@
 import React from 'react';
 import { differenceInDays } from 'date-fns';
-import { EventLabel } from '../shared/event-label';
+import { Deadline } from '../shared/deadline';
 import { projects } from '../calendar-data';
-import type { CalendarEvent } from '../calendar-data';
+import type { Deadline as DeadlineType } from '../calendar-data';
 
-interface MonthlyEventBarProps {
-  event: CalendarEvent;
+interface MonthlyDeadlineProps {
+  event: DeadlineType;
   row: number;
   weekDays: Date[];
 }
 
-export function MonthlyEventBar({ event, row, weekDays }: MonthlyEventBarProps) {
+export function MonthlyDeadline({ event, row, weekDays }: MonthlyDeadlineProps) {
   const project = projects.find((p) => p.id === event.projectId);
   if (!project) return null;
 
@@ -54,7 +54,7 @@ export function MonthlyEventBar({ event, row, weekDays }: MonthlyEventBarProps) 
               whiteSpace: 'nowrap',
             }}
           >
-            <EventLabel project={project} fontSize="0.75em" />
+            <Deadline project={project} fontSize="0.75em" />
           </div>
         )}
       </div>

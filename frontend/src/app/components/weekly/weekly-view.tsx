@@ -5,14 +5,14 @@ import {
   isSameDay,
   differenceInDays,
 } from 'date-fns';
-import { projects, calendarEvents, schedules, todos, stickyNotes, getEventsForWeek, type Todo } from '../calendar-data';
+import { projects, deadlines, schedules, todos, memos, getDeadlinesForWeek, type Todo } from '../calendar-data';
 import { CalendarDayHeader } from '../shared/calendar-day-header';
 import { VerticalGridLines } from '../shared/vertical-grid-lines';
 import { DayNumber } from '../shared/day-number';
-import { EventLabel } from '../shared/event-label';
-import { ScheduleCard } from './schedule-card';
-import { TodoItem } from './todo-item';
-import { StickyNote } from './sticky-note';
+import { Deadline } from '../shared/deadline';
+import { Schedule } from './weekly-schedule';
+import { Todo as TodoComponent } from './todo';
+import { Memo } from './memo';
 
 interface WeeklyViewProps {
   currentDate: Date;
@@ -49,10 +49,10 @@ export function WeeklyView({ currentDate }: WeeklyViewProps) {
     setTodoDateOverrides((prev) => ({ ...prev, [id]: addDays(currentDate, 1) }));
   };
 
-  const weekEvents = calendarEvents.filter(
+  const weekEvents = deadlines.filter(
     (ev) => ev.endDate >= weekStart && ev.startDate <= weekEnd
   );
-  const eventRows = getEventsForWeek(weekDays, weekEvents);
+  const eventRows = getDeadlinesForWeek(weekDays, weekEvents);
 
   return (
     <div className="flex-1 flex flex-col overflow-auto">
@@ -114,7 +114,7 @@ export function WeeklyView({ currentDate }: WeeklyViewProps) {
                 className="h-full rounded-r-[0.3125rem] flex items-center justify-end pr-2 gap-[0.5em]"
                 style={{ backgroundColor: project.bgColor }}
               >
-                {endsThisWeek && <EventLabel project={project} fontSize="1em" />}
+                {endsThisWeek && <Deadline project={project} fontSize="1em" />}
               </div>
             </div>
           );
@@ -127,7 +127,7 @@ export function WeeklyView({ currentDate }: WeeklyViewProps) {
             const effectiveDate = todoDateOverrides[todo.id] ?? todo.date;
             return isSameDay(effectiveDate, day);
           });
-          const dayNotes = stickyNotes.filter((note) => isSameDay(note.date, day));
+          const dayNotes = memos.filter((note) => isSameDay(note.date, day));
           const items = [
             ...daySchedules.map((schedule) => ({ type: 'schedule' as const, id: schedule.id, schedule })),
             ...dayTodos.map((todo) => ({ type: 'todo' as const, id: todo.id, todo })),
@@ -152,16 +152,16 @@ export function WeeklyView({ currentDate }: WeeklyViewProps) {
                 {items.map((item) => (
                   <div key={item.id} className="w-full">
                     {item.type === 'schedule' ? (
-                      <ScheduleCard schedule={item.schedule} />
+                      <Schedule schedule={item.schedule} />
                     ) : item.type === 'todo' ? (
-                      <TodoItem
+                      <TodoComponent
                         todo={item.todo}
                         isCompleted={todoState[item.todo.id]}
                         onToggle={() => toggleTodo(item.todo.id)}
                         onMoveToNext={() => moveTodoToNextDay(item.todo.id, todoDateOverrides[item.todo.id] ?? item.todo.date)}
                       />
                     ) : (
-                      <StickyNote note={item.note} />
+                      <Memo note={item.note} />
                     )}
                   </div>
                 ))}

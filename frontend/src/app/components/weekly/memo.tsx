@@ -1,8 +1,8 @@
 import React from 'react';
-import type { StickyNote as StickyNoteType } from '../calendar-data';
+import type { Memo as MemoType } from '../calendar-data';
 
-interface StickyNoteProps {
-  note: StickyNoteType;
+interface MemoProps {
+  note: MemoType;
 }
 
 const NOTE_BACKGROUND_BY_COLOR = {
@@ -29,7 +29,7 @@ const NOTE_CORNER_BY_COLOR = {
 
 const CUT_SIZE = '1em';
 
-export function StickyNote({ note }: StickyNoteProps) {
+export function Memo({ note }: MemoProps) {
   const backgroundColor = NOTE_BACKGROUND_BY_COLOR[note.color];
   const cornerColor = NOTE_CORNER_BY_COLOR[note.color];
 

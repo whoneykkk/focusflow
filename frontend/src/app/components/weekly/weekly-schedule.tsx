@@ -1,12 +1,12 @@
 import React from 'react';
-import type { Schedule } from '../calendar-data';
+import type { Schedule as ScheduleType } from '../calendar-data';
 import { hexToRgba } from '../shared/color-utils';
 
-interface ScheduleCardProps {
-  schedule: Schedule;
+interface ScheduleProps {
+  schedule: ScheduleType;
 }
 
-export function ScheduleCard({ schedule }: ScheduleCardProps) {
+export function Schedule({ schedule }: ScheduleProps) {
   const bgColor = hexToRgba(schedule.color, 0.1);
   return (
     <div

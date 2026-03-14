@@ -7,7 +7,7 @@ export interface Project {
   dDay: number;
 }
 
-export interface CalendarEvent {
+export interface Deadline {
   id: string;
   projectId: string;
   startDate: Date;
@@ -33,7 +33,7 @@ export interface Todo {
   hasArrow?: boolean;
 }
 
-export interface StickyNote {
+export interface Memo {
   id: string;
   text: string;
   color: 'yellow' | 'purple';
@@ -50,13 +50,13 @@ export interface DayStats {
 
 import { differenceInDays } from 'date-fns';
 
-export interface EventRow {
-  event: CalendarEvent;
+export interface DeadlineRow {
+  event: Deadline;
   row: number;
 }
 
-export function getEventsForWeek(weekDays: Date[], events: CalendarEvent[]): EventRow[] {
-  const rows: EventRow[] = [];
+export function getDeadlinesForWeek(weekDays: Date[], events: Deadline[]): DeadlineRow[] {
+  const rows: DeadlineRow[] = [];
   const usedRows: boolean[][] = weekDays.map(() => []);
   const weekStart = weekDays[0];
   const weekEnd = weekDays[6];
@@ -118,7 +118,7 @@ export const projects: Project[] = [
   },
 ];
 
-export const calendarEvents: CalendarEvent[] = [
+export const deadlines: Deadline[] = [
   {
     id: 'ev1',
     projectId: 'byline',
@@ -203,7 +203,7 @@ export const todos: Todo[] = [
   },
 ];
 
-export const stickyNotes: StickyNote[] = [
+export const memos: Memo[] = [
   {
     id: 'note1',
     text: '시험까지 별로 안남았으니까 빼먹지 말고 꼭 하자',

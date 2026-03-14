@@ -1,15 +1,15 @@
 import React from 'react';
 import { CheckCircleFadedIcon, BrightnessIcon, ArrowForwardIcon } from '../icons';
-import type { Todo } from '../calendar-data';
+import type { Todo as TodoType } from '../calendar-data';
 
-interface TodoItemProps {
-  todo: Todo;
+interface TodoProps {
+  todo: TodoType;
   isCompleted: boolean;
   onToggle: () => void;
   onMoveToNext?: () => void;
 }
 
-export function TodoItem({ todo, isCompleted, onToggle, onMoveToNext }: TodoItemProps) {
+export function Todo({ todo, isCompleted, onToggle, onMoveToNext }: TodoProps) {
   return (
     <div className="flex items-center gap-[0.3125rem] w-full">
       <button onClick={onToggle} className="shrink-0">
