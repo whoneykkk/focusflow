@@ -32,7 +32,7 @@ export function Sidebar({ currentDate, onDateChange, selectedDate }: SidebarProp
   const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
 
   return (
-    <div className="w-[200px] shrink-0 px-3 pt-4">
+    <div className="w-[12.5rem] shrink-0 px-3 pt-4">
       {/* Mini Calendar Header */}
       <div className="flex items-center justify-between mb-2">
         <span className="text-[1em] text-black" style={{ fontWeight: 700 }}>
@@ -78,7 +78,7 @@ export function Sidebar({ currentDate, onDateChange, selectedDate }: SidebarProp
           return (
             <div
               key={day.toISOString()}
-              className="relative flex items-center justify-center py-[1px]"
+              className="relative flex items-center justify-center py-[0.0625rem]"
             >
               {isToday && (
                 <div className="absolute inset-0 flex items-center justify-center">
