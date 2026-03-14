@@ -7,12 +7,12 @@ import {
   eachDayOfInterval,
   isSameDay,
 } from 'date-fns';
-import { calendarEvents, getEventsForWeek, schedules } from '../calendar-data';
+import { deadlines, getDeadlinesForWeek, schedules } from '../calendar-data';
 import { CalendarDayHeader } from '../shared/calendar-day-header';
 import { VerticalGridLines } from '../shared/vertical-grid-lines';
 import { DayNumber } from '../shared/day-number';
-import { MonthlyEventBar } from './monthly-event-bar';
-import { ScheduleCard } from './monthly-schedule-card';
+import { MonthlyDeadline } from './monthly-deadline';
+import { Schedule } from './monthly-schedule';
 
 interface MonthlyViewProps {
   currentDate: Date;
@@ -39,7 +39,7 @@ export function MonthlyView({ currentDate }: MonthlyViewProps) {
       {/* Calendar Grid */}
       <div className="flex-1 flex flex-col">
         {weeks.map((week, weekIdx) => {
-          const eventRows = getEventsForWeek(week, calendarEvents);
+          const eventRows = getDeadlinesForWeek(week, deadlines);
           const maxEventRow = eventRows.reduce((max, { row }) => Math.max(max, row), -1);
           const scheduleAnchorTopRem = maxEventRow >= 0 ? 2.25 + maxEventRow * 1.25 : 1.625;
           const scheduleTop = `calc(${scheduleAnchorTopRem}rem + 0.5em)`;
@@ -61,7 +61,7 @@ export function MonthlyView({ currentDate }: MonthlyViewProps) {
 
               {/* Event bars */}
               {eventRows.map(({ event, row }) => (
-                <MonthlyEventBar key={event.id} event={event} row={row} weekDays={week} />
+                <MonthlyDeadline key={event.id} event={event} row={row} weekDays={week} />
               ))}
 
               {/* Schedules (same layer as event bars, below with margin) */}
@@ -83,7 +83,7 @@ export function MonthlyView({ currentDate }: MonthlyViewProps) {
                   >
                     <div className="flex flex-col gap-1">
                       {daySchedules.map((schedule) => (
-                        <ScheduleCard key={schedule.id} schedule={schedule} />
+                        <Schedule key={schedule.id} schedule={schedule} />
                       ))}
                     </div>
                   </div>
