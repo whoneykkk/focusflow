@@ -6,11 +6,12 @@ interface TodoItemProps {
   todo: Todo;
   isCompleted: boolean;
   onToggle: () => void;
+  onMoveToNext?: () => void;
 }
 
-export function TodoItem({ todo, isCompleted, onToggle }: TodoItemProps) {
+export function TodoItem({ todo, isCompleted, onToggle, onMoveToNext }: TodoItemProps) {
   return (
-    <div className="flex items-center gap-[0.3125rem]">
+    <div className="flex items-center gap-[0.3125rem] w-full">
       <button onClick={onToggle} className="shrink-0">
         {isCompleted ? (
           <CheckCircleFadedIcon size={15} />
@@ -34,10 +35,12 @@ export function TodoItem({ todo, isCompleted, onToggle }: TodoItemProps) {
         {todo.text}
       </span>
       {todo.hasArrow && (
-        <ArrowForwardIcon
-          color={todo.isUrgent ? '#FF0000' : '#1C1B1F'}
-          size={15}
-        />
+        <button onClick={onMoveToNext} className="ml-auto shrink-0">
+          <ArrowForwardIcon
+            color={todo.isUrgent ? '#FF0000' : '#1C1B1F'}
+            size={15}
+          />
+        </button>
       )}
     </div>
   );

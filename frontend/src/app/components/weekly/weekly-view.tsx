@@ -39,8 +39,14 @@ export function WeeklyView({ currentDate }: WeeklyViewProps) {
     return state;
   });
 
+  const [todoDateOverrides, setTodoDateOverrides] = useState<Record<string, Date>>({});
+
   const toggleTodo = (id: string) => {
     setTodoState((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const moveTodoToNextDay = (id: string, currentDate: Date) => {
+    setTodoDateOverrides((prev) => ({ ...prev, [id]: addDays(currentDate, 1) }));
   };
 
   const weekEvents = calendarEvents.filter(
@@ -117,7 +123,10 @@ export function WeeklyView({ currentDate }: WeeklyViewProps) {
         {/* Schedules + Todos + Sticky Notes (Top-aligned stack) */}
         {weekDays.map((day, dayIdx) => {
           const daySchedules = schedules.filter((schedule) => isSameDay(schedule.date, day));
-          const dayTodos: Todo[] = todos.filter((todo) => isSameDay(todo.date, day));
+          const dayTodos: Todo[] = todos.filter((todo) => {
+            const effectiveDate = todoDateOverrides[todo.id] ?? todo.date;
+            return isSameDay(effectiveDate, day);
+          });
           const dayNotes = stickyNotes.filter((note) => isSameDay(note.date, day));
           const items = [
             ...daySchedules.map((schedule) => ({ type: 'schedule' as const, id: schedule.id, schedule })),
@@ -149,6 +158,7 @@ export function WeeklyView({ currentDate }: WeeklyViewProps) {
                         todo={item.todo}
                         isCompleted={todoState[item.todo.id]}
                         onToggle={() => toggleTodo(item.todo.id)}
+                        onMoveToNext={() => moveTodoToNextDay(item.todo.id, todoDateOverrides[item.todo.id] ?? item.todo.date)}
                       />
                     ) : (
                       <StickyNote note={item.note} />
